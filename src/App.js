@@ -34,6 +34,9 @@ function App() {
         <Route path="/zuzenean">
           <Zuzenean />
         </Route>
+        <Route path="/">
+          <div>Homepage</div>
+        </Route>
       </Switch>
     </Router>
   );
