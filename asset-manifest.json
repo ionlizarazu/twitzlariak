@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/twitzlariak/static/css/main.c99ca818.chunk.css",
-    "main.js": "/twitzlariak/static/js/main.09c67fca.chunk.js",
-    "main.js.map": "/twitzlariak/static/js/main.09c67fca.chunk.js.map",
+    "main.js": "/twitzlariak/static/js/main.a02b3137.chunk.js",
+    "main.js.map": "/twitzlariak/static/js/main.a02b3137.chunk.js.map",
     "runtime-main.js": "/twitzlariak/static/js/runtime-main.28aeeaad.js",
     "runtime-main.js.map": "/twitzlariak/static/js/runtime-main.28aeeaad.js.map",
     "static/css/2.10d85adb.chunk.css": "/twitzlariak/static/css/2.10d85adb.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.10d85adb.chunk.css",
     "static/js/2.9a1bff1f.chunk.js",
     "static/css/main.c99ca818.chunk.css",
-    "static/js/main.09c67fca.chunk.js"
+    "static/js/main.a02b3137.chunk.js"
   ]
 }
