@@ -1,6 +1,7 @@
 import './portada.css';
 
 import {
+  Button,
   Card,
   Container,
   Header,
@@ -8,6 +9,7 @@ import {
   List,
   Pagination,
   Segment,
+  Select,
 } from 'semantic-ui-react';
 import {
   GetErabiltzaileak,
@@ -36,7 +38,7 @@ const Portada = (props) => {
   const twitzlariList = twitzlariak.twitzlariak;
   let gaur = new Date();
   let atzeraData = new Date();
-  atzeraData.setDate(gaur.getDate() - 20);
+  atzeraData.setDate(gaur.getDate() - 30);
   const getErabiltzailearenKlipak = async (user_id) => {
     return await GetErabiltzailearenKlipak(user_id);
   };
@@ -52,9 +54,7 @@ const Portada = (props) => {
 
   useEffect(() => {
     setPaginationKlipak(
-      klipak
-        .sort(dynamicSort('-created_at'))
-        .slice((paginationOrria - 1) * 12, (paginationOrria - 1) * 12 + 12),
+      klipak.slice((paginationOrria - 1) * 12, (paginationOrria - 1) * 12 + 12),
     );
   }, [klipak, paginationOrria]);
 
@@ -81,7 +81,9 @@ const Portada = (props) => {
               });
             }
 
-            setKlipak((prevState) => [...prevState, klipa]);
+            setKlipak((prevState) =>
+              [...prevState, klipa].sort(dynamicSort('-created_at')),
+            );
           });
           setKlipEgileak(klipEgileakBerria);
         });
@@ -89,8 +91,70 @@ const Portada = (props) => {
     }
   }, [users]);
 
+  const klipOrdenazioa = [
+    {
+      key: '-view_count',
+      value: '-view_count',
+      text: <>Ikusienak</>,
+    },
+    {
+      key: 'broadcaster_name',
+      value: 'broadcaster_name',
+      text: (
+        <>
+          Streamerra
+          <Icon name="sort alphabet down" />
+        </>
+      ),
+    },
+    {
+      key: '-creator_name',
+      value: '-creator_name',
+      text: (
+        <>
+          Egilea
+          <Icon name="sort alphabet up" />
+        </>
+      ),
+    },
+    {
+      key: 'creator_name',
+      value: 'creator_name',
+      text: (
+        <>
+          Egilea
+          <Icon name="sort alphabet down" />
+        </>
+      ),
+    },
+    {
+      key: '-broadcaster_name',
+      value: '-broadcaster_name',
+      text: (
+        <>
+          Streamerra
+          <Icon name="sort alphabet up" />
+        </>
+      ),
+    },
+    {
+      key: 'created_at',
+      value: 'created_at',
+      text: <>Zaharrenak</>,
+    },
+    {
+      key: '-created_at',
+      value: '-created_at',
+      text: <>Berrienak</>,
+    },
+  ];
+
   const handlePaginationChange = (e, { activePage }) =>
     setPaginationOrria(activePage);
+
+  const ordenatu = (irizpidea) => {
+    setKlipak([...klipak.sort(dynamicSort(irizpidea))]);
+  };
 
   return (
     <Container>
@@ -98,7 +162,7 @@ const Portada = (props) => {
       <div className="pulsating-circle"></div>
       <h2 className="pulsating-circle">Orain zuzenean</h2>
       {zuzenekoak.length > 0 ? (
-        <Card.Group itemsPerRow={3} stackable>
+        <Card.Group itemsPerRow={3} doubling>
           {zuzenekoak.map((erabiltzailea, index) => (
             <ZuzenekoaCard erabiltzailea={erabiltzailea} />
           ))}
@@ -130,12 +194,21 @@ const Portada = (props) => {
             )}
         </List>
       </Segment>
-      <Card.Group itemsPerRow={4} stackable>
-        {paginationKlipak.map((clip) => (
-          <ClipCard clip={clip} />
-        ))}
-      </Card.Group>
       <Segment>
+        Ordena:{''}
+        <Select
+          placeholder="Ordenatu klipak"
+          options={klipOrdenazioa}
+          onChange={(e, { value }) => ordenatu(value)}
+          defaultValue={'-created_at'}
+        />
+      </Segment>
+      <Segment>
+        <Card.Group itemsPerRow={4} doubling>
+          {paginationKlipak.map((clip) => (
+            <ClipCard clip={clip} />
+          ))}
+        </Card.Group>
         <Pagination
           boundaryRange={1}
           defaultActivePage={1}
