@@ -5,6 +5,7 @@ import { GetErabiltzaileak } from '../api.js';
 import { dynamicSort } from '../utils.js';
 import moment from 'moment';
 import twitzlariak from '../twitzlariak.json';
+import { Link } from 'react-router-dom';
 
 const Gutarrak = (props) => {
   const [users, setUsers] = useState([]);
@@ -19,7 +20,7 @@ const Gutarrak = (props) => {
   return (
     <Container>
       <Header as="h1">Gutarrak</Header>
-      <Card.Group itemsPerRow={6} stackable>
+      <Card.Group itemsPerRow={6} doubling>
         {users.sort(dynamicSort('display_name')).map((user) => {
           return (
             <Card>
@@ -31,7 +32,11 @@ const Gutarrak = (props) => {
                 ui={false}
               />
               <Card.Content>
-                <Card.Header>{user?.display_name}</Card.Header>
+                <Card.Header>
+                  <Link to={`/gutarrak/${user?.display_name}`}>
+                    {user?.display_name}
+                  </Link>
+                </Card.Header>
                 <Card.Meta>
                   <span className="date">
                     {moment(user?.created_at).format('YYYY/MM/DD')}
