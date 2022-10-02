@@ -1,9 +1,9 @@
 import './portada.css';
 
 import {
-  Button,
   Card,
   Container,
+  Dropdown,
   Header,
   Icon,
   List,
@@ -16,6 +16,7 @@ import {
   GetErabiltzailearenKlipak,
   GetZuzenekoak,
 } from '../api.js';
+import { KLIP_ORDENAZIOA, TWITZLARI_AUKERAK } from '../const';
 import React, { useEffect, useState } from 'react';
 
 import ClipCard from '../cards/ClipCard';
@@ -24,8 +25,10 @@ import { dynamicSort } from '../utils';
 import twitzlariak from '../twitzlariak.json';
 
 const Portada = (props) => {
+  const [klipakOriginala, setKlipakOriginala] = useState([]);
   const [klipak, setKlipak] = useState([]);
   const [users, setUsers] = useState([]);
+  const [options, setOptions] = useState([]);
   const [paginationKlipak, setPaginationKlipak] = useState(klipak.slice(0, 12));
   const [paginationOrria, setPaginationOrria] = useState(1);
   const [zuzenekoak, setZuzenekoak] = useState([]);
@@ -84,6 +87,9 @@ const Portada = (props) => {
             setKlipak((prevState) =>
               [...prevState, klipa].sort(dynamicSort('-created_at')),
             );
+            setKlipakOriginala((prevState) =>
+              [...prevState, klipa].sort(dynamicSort('-created_at')),
+            );
           });
           setKlipEgileak(klipEgileakBerria);
         });
@@ -91,69 +97,25 @@ const Portada = (props) => {
     }
   }, [users]);
 
-  const klipOrdenazioa = [
-    {
-      key: '-view_count',
-      value: '-view_count',
-      text: <>Ikusienak</>,
-    },
-    {
-      key: 'broadcaster_name',
-      value: 'broadcaster_name',
-      text: (
-        <>
-          Streamerra
-          <Icon name="sort alphabet down" />
-        </>
-      ),
-    },
-    {
-      key: '-creator_name',
-      value: '-creator_name',
-      text: (
-        <>
-          Egilea
-          <Icon name="sort alphabet up" />
-        </>
-      ),
-    },
-    {
-      key: 'creator_name',
-      value: 'creator_name',
-      text: (
-        <>
-          Egilea
-          <Icon name="sort alphabet down" />
-        </>
-      ),
-    },
-    {
-      key: '-broadcaster_name',
-      value: '-broadcaster_name',
-      text: (
-        <>
-          Streamerra
-          <Icon name="sort alphabet up" />
-        </>
-      ),
-    },
-    {
-      key: 'created_at',
-      value: 'created_at',
-      text: <>Zaharrenak</>,
-    },
-    {
-      key: '-created_at',
-      value: '-created_at',
-      text: <>Berrienak</>,
-    },
-  ];
-
   const handlePaginationChange = (e, { activePage }) =>
     setPaginationOrria(activePage);
 
   const ordenatu = (irizpidea) => {
     setKlipak([...klipak.sort(dynamicSort(irizpidea))]);
+    setKlipakOriginala([...klipak.sort(dynamicSort(irizpidea))]);
+  };
+
+  const handleChange = (e, { value }) => {
+    if (value.length > 0) {
+      const filter_klipak = [
+        ...klipakOriginala.filter((klipa) =>
+          value.includes(klipa.broadcaster_name.toLowerCase()),
+        ),
+      ];
+      setKlipak(filter_klipak);
+    } else if (value.length === 0) {
+      setKlipak(klipakOriginala);
+    }
   };
 
   return (
@@ -195,28 +157,59 @@ const Portada = (props) => {
         </List>
       </Segment>
       <Segment>
-        Ordena:{''}
+        <strong>Ordenatu: </strong>
         <Select
           placeholder="Ordenatu klipak"
-          options={klipOrdenazioa}
+          options={KLIP_ORDENAZIOA}
           onChange={(e, { value }) => ordenatu(value)}
           defaultValue={'-created_at'}
         />
+        <br />
+        <br />
+        <strong>Iragazi: </strong>
+
+        <Dropdown
+          placeholder="Erabiltzaileak"
+          multiple
+          selection
+          search
+          onAddItem={(event, data) =>
+            setOptions([
+              ...options,
+              { key: data.value, text: data.value, value: data.value },
+            ])
+          }
+          options={TWITZLARI_AUKERAK}
+          onChange={handleChange}
+        />
       </Segment>
       <Segment>
-        <Card.Group itemsPerRow={4} doubling>
-          {paginationKlipak.map((clip) => (
-            <ClipCard clip={clip} />
-          ))}
-        </Card.Group>
-        <Pagination
-          boundaryRange={1}
-          defaultActivePage={1}
-          showEllipsis={true}
-          activePage={paginationOrria}
-          onPageChange={handlePaginationChange}
-          totalPages={Math.round(klipak.length / 12)}
-        />
+        {paginationKlipak.length > 0 ? (
+          <>
+            <Card.Group itemsPerRow={4} doubling>
+              {paginationKlipak.map((clip) => (
+                <ClipCard clip={clip} />
+              ))}
+            </Card.Group>
+            {Math.round(klipak.length / 12) > 1 && (
+              <Pagination
+                boundaryRange={1}
+                defaultActivePage={1}
+                showEllipsis={true}
+                activePage={paginationOrria}
+                onPageChange={handlePaginationChange}
+                totalPages={Math.round(klipak.length / 12)}
+              />
+            )}
+          </>
+        ) : (
+          <Segment placeholder>
+            <Header icon>
+              <Icon name="video" />
+              Ez dago bilaketa horrekin ezer.
+            </Header>
+          </Segment>
+        )}
       </Segment>
     </Container>
   );
