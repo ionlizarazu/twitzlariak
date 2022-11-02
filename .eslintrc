@@ -2,7 +2,9 @@
   "extends": [
     "react-app",
     "prettier",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "eslint:recommended"
+
   ],
   "plugins": [
     "prettier",
@@ -20,6 +22,7 @@
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
+    "parser": "babel-eslint",
     "ecmaFeatures": {
       "legacyDecorators": true
     }
@@ -42,23 +45,16 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [
-          [
-            "./node_modules","./src"
-          ]
-        ],
+        "map": [["twitzlariak", "./src"]],
+      },
+      "node": {
         "extensions": [
           ".js",
           ".jsx",
           ".json"
         ]
-      },
-      "babel-plugin-root-import": {
-        "rootPathSuffix": "src"
       }
-    },
-    "import/core-modules": [
-    ]
+    }
   },
   "globals": {
     "root": true,

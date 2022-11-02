@@ -17,7 +17,7 @@ import TwitchAPI, {
 import { Link } from 'react-router-dom';
 import TwitzlariaCard from '../cards/TwitzlariaCard';
 import moment from 'moment';
-import twitzlariak from '../twitzlariak.json';
+import twitzlariak from '../config/twitzlariak.json';
 
 const Bilatzailea = (props) => {
   const [users, setUsers] = useState([]);
@@ -51,7 +51,7 @@ const Bilatzailea = (props) => {
   useEffect(() => {
     setOptions(twitzlariList);
     setSelectedUser('');
-  }, []);
+  }, [twitzlariList]);
 
   function handleChange(e, { value }) {
     setUserList(value);
@@ -66,12 +66,12 @@ const Bilatzailea = (props) => {
       setKlipak([]);
       let azkenBideoak = [];
       let azkenKlipak = [];
-      await (await getErabiltzailearenBideoak(user.id)).map((bideoa) => {
+      await (await getErabiltzailearenBideoak(user.id)).forEach((bideoa) => {
         azkenBideoak = [...azkenBideoak, bideoa];
       });
       setBideoak(azkenBideoak);
 
-      await (await getErabiltzailearenKlipak(user.id)).map((klipa) => {
+      await (await getErabiltzailearenKlipak(user.id)).forEach((klipa) => {
         azkenKlipak = [...azkenKlipak, klipa];
       });
       setKlipak(azkenKlipak);

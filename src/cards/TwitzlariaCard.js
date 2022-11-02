@@ -1,9 +1,9 @@
 import './twitzlariakCard.css';
 
 import { Card, Icon, Image } from 'semantic-ui-react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import api from '../api.js';
+// import api from '../api.js';
 
 const TwitzlariaCard = ({
   title,

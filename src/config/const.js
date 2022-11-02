@@ -5,17 +5,17 @@ export const KLIP_ORDENAZIOA = [
   {
     key: '-created_at',
     value: '-created_at',
-    text: <>Berrienak</>,
+    text: <>Berrienetik zaharrenera</>,
   },
   {
     key: 'created_at',
     value: 'created_at',
-    text: <>Zaharrenak</>,
+    text: <>Zaharrenetik berrienera</>,
   },
   {
     key: '-view_count',
     value: '-view_count',
-    text: <>Ikusienak</>,
+    text: <>Ikusienak aurrena</>,
   },
   {
     key: 'broadcaster_name',

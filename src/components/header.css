@@ -1,0 +1,11 @@
+div.header .ui.menu {
+  background-color: white;
+  border-radius: 0;
+}
+
+div.header .ui.menu .ui.container {
+  width: 100% !important;
+  justify-content: center;
+  margin-top: 60px;
+  background-color: black;
+}

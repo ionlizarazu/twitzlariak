@@ -1,5 +1,6 @@
-import axios from 'axios';
 import secrets from './secrets.json';
+
+import axios from 'axios';
 
 const TwitchAPI = axios.create({
   baseURL: 'https://api.twitch.tv/helix/',

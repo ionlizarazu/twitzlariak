@@ -75,4 +75,4 @@ https://dev.twitch.tv/docs/authentication/getting-tokens-oauth
 
 Apps: https://dev.twitch.tv/console/apps
 
-Go to: https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=your_client_id&redirect_uri=http://localhost&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls
+Go to: https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=your_client_id&redirect_uri=http://localhost&scope=

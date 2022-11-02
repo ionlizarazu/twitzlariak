@@ -1,3 +1,69 @@
 .ui.card .content .header {
   word-break: break-all;
 }
+
+/* a.ui.button.inverted.link-style {
+  padding: inherit;
+  border: none;
+  margin: inherit;
+  box-shadow: none !important;
+} */
+
+strong.filter-heading {
+  display: block;
+}
+
+i.copy-icon {
+  color: grey;
+  cursor: pointer;
+}
+
+.ui.grid .row.no-padded {
+  padding: 0;
+}
+
+/* CLIPPER RANKING */
+div.ui.grid.ranking-grid div.column {
+  display: flex;
+  justify-content: center;
+}
+
+/* CLIP FILTERS BAND*/
+div.ui.segment.clip-filter-container {
+  width: 100%;
+  margin-top: 0;
+  background-color: var(--main-color);
+  border-radius: 0;
+}
+
+div.ui.segment.clip-filter-container h3 {
+  color: white;
+}
+
+div.ui.segment.clip-filter-container strong {
+  color: white;
+}
+
+div.ui.segment.clip-filter-container button.ui.button {
+  margin-top: 1em;
+  background-color: white;
+  color: var(--main-color);
+}
+
+/* CLIPPERS BAND*/
+div.ui.segment.clipers-container {
+  width: 100%;
+  margin-bottom: 0;
+  background-color: var(--main-grey-color);
+  border-radius: 0;
+}
+
+/* LIVE BAND*/
+div.ui.segment.live {
+  display: flex;
+  min-height: 10rem !important;
+  justify-content: center;
+}
+/* div.ui.segment.clipers-container h3 {
+  color: white;
+} */

@@ -4,214 +4,292 @@ import {
   Card,
   Container,
   Dropdown,
+  Grid,
   Header,
   Icon,
-  List,
+  Button,
   Pagination,
   Segment,
   Select,
+  Statistic,
+  // List,
+  // Item,
 } from 'semantic-ui-react';
-import {
-  GetErabiltzaileak,
-  GetErabiltzailearenKlipak,
-  GetZuzenekoak,
-} from '../api.js';
-import { KLIP_ORDENAZIOA, TWITZLARI_AUKERAK } from '../const';
+// import { GetErabiltzailearenKlipak } from '../api.js';
+import { KLIP_ORDENAZIOA } from '../config/const';
 import React, { useEffect, useState } from 'react';
 
 import ClipCard from '../cards/ClipCard';
 import ZuzenekoaCard from '../cards/ZuzenekoaCard';
 import { dynamicSort } from '../utils';
-import twitzlariak from '../twitzlariak.json';
+import twitzlariak from '../config/twitzlariak.json';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getZuzenekoak } from '../store/actions';
+import { getErabiltzailearenKlipak } from '../store/actions';
+import { getStatSize } from './utils';
 
 const Portada = (props) => {
-  const [klipakOriginala, setKlipakOriginala] = useState([]);
-  const [klipak, setKlipak] = useState([]);
-  const [users, setUsers] = useState([]);
+  const users = useSelector((state) => state.erabiltzaileak);
+  const lives = useSelector((state) => state.zuzenekoak);
+  const clips_state = useSelector((state) => state.klipak);
+  const dispatch = useDispatch();
+  const [clipsOriginal, setclipsOriginal] = useState([]);
+  const [clipOwners, setclipOwners] = useState([]);
+  const [clipCreators, setclipCreators] = useState([]);
+  const [klipak, setClips] = useState([]);
+  const [filteredClipper, setFilteredClipper] = useState([]);
   const [options, setOptions] = useState([]);
-  const [paginationKlipak, setPaginationKlipak] = useState(klipak.slice(0, 12));
-  const [paginationOrria, setPaginationOrria] = useState(1);
-  const [zuzenekoak, setZuzenekoak] = useState([]);
-  const [klipEgileak, setKlipEgileak] = useState([]);
-  const getZuzenekoak = async () =>
-    setZuzenekoak(await GetZuzenekoak(twitzlariList));
+  const [paginationClips, setPaginationClips] = useState([]);
+  const [filteredBroadcaster, setfilteredBroadcaster] = useState([]);
   useEffect(() => {
-    getZuzenekoak();
-  }, []);
+    if (
+      clips_state.loaded &&
+      Object.keys(clips_state.broadcasters).length > 0
+    ) {
+      let klipak = [];
+      Object.keys(clips_state.broadcasters).forEach((broadcaster) => {
+        if (clips_state.broadcasters[broadcaster].length > 0) {
+          clips_state.broadcasters[broadcaster].forEach((klip) =>
+            klipak.push(klip),
+          );
+        }
+      });
+      setClips(klipak.sort(dynamicSort('-created_at')));
+      setclipsOriginal([...klipak.sort(dynamicSort('-created_at'))]);
+      setclipOwners(
+        [...new Set(klipak.map((k) => k.broadcaster_name).sort())].map(
+          (b_name) => {
+            return {
+              key: b_name,
+              value: b_name,
+              text: b_name,
+            };
+          },
+        ),
+      );
+      setclipCreators(
+        [...new Set(klipak.map((k) => k.creator_name).sort())].map((c_name) => {
+          var clip_count = klipak.filter((k) => k.creator_name === c_name);
+          return {
+            key: c_name,
+            value: c_name,
+            text: c_name,
+            count: clip_count.length,
+          };
+        }),
+      );
+    }
+  }, [clips_state]);
+  const [paginationOrria, setPaginationOrria] = useState(1);
+  // const [clipCreators, setclipCreators] = useState([]);
   const twitzlariList = twitzlariak.twitzlariak;
+  useEffect(() => {
+    dispatch(getZuzenekoak(twitzlariList));
+  }, [dispatch, twitzlariList]);
   let gaur = new Date();
   let atzeraData = new Date();
   atzeraData.setDate(gaur.getDate() - 30);
-  const getErabiltzailearenKlipak = async (user_id) => {
-    return await GetErabiltzailearenKlipak(user_id);
-  };
-  const getErabiltzaileak = async (users) => {
-    return await GetErabiltzaileak(users);
-  };
 
   useEffect(() => {
-    getErabiltzaileak(twitzlariList).then((response) => {
-      setUsers(response);
-    });
-  }, []);
-
-  useEffect(() => {
-    setPaginationKlipak(
+    setPaginationClips(
       klipak.slice((paginationOrria - 1) * 12, (paginationOrria - 1) * 12 + 12),
     );
   }, [klipak, paginationOrria]);
 
   useEffect(() => {
-    if (users.length > 0) {
-      const klipEgileakBerria = [...klipEgileak];
-      users.forEach((user) => {
-        getErabiltzailearenKlipak(user.id).then((response) => {
-          response.forEach((klipa) => {
-            if (
-              klipEgileakBerria.filter(
-                (creator) => creator.egilea === klipa.creator_name,
-              ).length === 0
-            ) {
-              klipEgileakBerria.push({
-                egilea: klipa.creator_name,
-                klipak: 1,
-              });
-            } else {
-              klipEgileakBerria.forEach((creator) => {
-                if (creator.egilea === klipa.creator_name) {
-                  creator.klipak++;
-                }
-              });
-            }
-
-            setKlipak((prevState) =>
-              [...prevState, klipa].sort(dynamicSort('-created_at')),
-            );
-            setKlipakOriginala((prevState) =>
-              [...prevState, klipa].sort(dynamicSort('-created_at')),
-            );
-          });
-          setKlipEgileak(klipEgileakBerria);
-        });
+    if (users.loaded && users.items.length > 0) {
+      users.items.forEach((user) => {
+        dispatch(getErabiltzailearenKlipak(user));
       });
     }
-  }, [users]);
+  }, [dispatch, users]);
 
   const handlePaginationChange = (e, { activePage }) =>
     setPaginationOrria(activePage);
 
   const ordenatu = (irizpidea) => {
-    setKlipak([...klipak.sort(dynamicSort(irizpidea))]);
-    setKlipakOriginala([...klipak.sort(dynamicSort(irizpidea))]);
+    setClips([...klipak.sort(dynamicSort(irizpidea))]);
+    setclipsOriginal([...klipak.sort(dynamicSort(irizpidea))]);
   };
 
-  const handleChange = (e, { value }) => {
+  const filterClips = (e, { value }, field, setter) => {
+    clearClipFilters();
     if (value.length > 0) {
-      const filter_klipak = [
-        ...klipakOriginala.filter((klipa) =>
-          value.includes(klipa.broadcaster_name.toLowerCase()),
+      const values_to_filter = value.map((v) => v.toLowerCase());
+      const filter_clips = [
+        ...clipsOriginal.filter((klipa) =>
+          values_to_filter.includes(klipa[field].toLowerCase()),
         ),
       ];
-      setKlipak(filter_klipak);
+      setter(value);
+      setClips(filter_clips);
     } else if (value.length === 0) {
-      setKlipak(klipakOriginala);
+      setClips(clipsOriginal);
     }
   };
 
-  return (
-    <Container>
-      <h1>Hasierako orria</h1>
-      <div className="pulsating-circle"></div>
-      <h2 className="pulsating-circle">Orain zuzenean</h2>
-      {zuzenekoak.length > 0 ? (
-        <Card.Group itemsPerRow={3} doubling>
-          {zuzenekoak.map((erabiltzailea, index) => (
-            <ZuzenekoaCard erabiltzailea={erabiltzailea} />
-          ))}
-        </Card.Group>
-      ) : (
-        <Segment placeholder>
-          <Header icon>
-            <Icon name="history" />
-            Orain momentuan ez dago inor zuzenean.
-          </Header>
-        </Segment>
-      )}
-      <hr />
-      <h2>Azken 30 egunetako klipak</h2>
-      <Segment>
-        <h3>Klipari ekinenak:</h3>
-        <List divided horizontal>
-          {klipEgileak &&
-            klipEgileak.sort(dynamicSort('-klipak')).map(
-              (egilea) =>
-                egilea.klipak > 2 && (
-                  <List.Item>
-                    <List.Content>
-                      <List.Header>{egilea.egilea}</List.Header>
-                      <List.Description>{egilea.klipak} klip</List.Description>
-                    </List.Content>
-                  </List.Item>
-                ),
-            )}
-        </List>
-      </Segment>
-      <Segment>
-        <strong>Ordenatu: </strong>
-        <Select
-          placeholder="Ordenatu klipak"
-          options={KLIP_ORDENAZIOA}
-          onChange={(e, { value }) => ordenatu(value)}
-          defaultValue={'-created_at'}
-        />
-        <br />
-        <br />
-        <strong>Iragazi: </strong>
+  const clearClipFilters = () => {
+    setFilteredClipper([]);
+    setfilteredBroadcaster([]);
+    setClips(clipsOriginal);
+  };
 
-        <Dropdown
-          placeholder="Erabiltzaileak"
-          multiple
-          selection
-          search
-          onAddItem={(event, data) =>
-            setOptions([
-              ...options,
-              { key: data.value, text: data.value, value: data.value },
-            ])
-          }
-          options={TWITZLARI_AUKERAK}
-          onChange={handleChange}
-        />
-      </Segment>
-      <Segment>
-        {paginationKlipak.length > 0 ? (
-          <>
-            <Card.Group itemsPerRow={4} doubling>
-              {paginationKlipak.map((clip) => (
-                <ClipCard clip={clip} />
-              ))}
-            </Card.Group>
-            {Math.round(klipak.length / 12) > 1 && (
-              <Pagination
-                boundaryRange={1}
-                defaultActivePage={1}
-                showEllipsis={true}
-                activePage={paginationOrria}
-                onPageChange={handlePaginationChange}
-                totalPages={Math.round(klipak.length / 12)}
-              />
-            )}
-          </>
+  return (
+    <div>
+      <h1>Twitch euskaraz</h1>
+      <div className="live-container">
+        <h2 className="ui container">Orain zuzenean</h2>
+        {lives.loaded && lives.items.length > 0 ? (
+          <Card.Group itemsPerRow={3} doubling>
+            {lives.items.map((erabiltzailea, index) => (
+              <ZuzenekoaCard erabiltzailea={erabiltzailea} />
+            ))}
+          </Card.Group>
         ) : (
-          <Segment placeholder>
+          <Segment basic className="live">
             <Header icon>
-              <Icon name="video" />
-              Ez dago bilaketa horrekin ezer.
+              <Icon name="history" />
+              Orain momentuan ez dago inor zuzenean.
             </Header>
           </Segment>
         )}
-      </Segment>
-    </Container>
+      </div>
+      <hr />
+      <div className="clips-container">
+        <h2 className="ui container">Klipak</h2>
+        <Segment className="clipers-container">
+          <Container>
+            <h3>Klipari ekinenak:</h3>
+            <Grid columns={5} className="ranking-grid">
+              {clipCreators &&
+                clipCreators
+                  .sort(dynamicSort('-count'))
+                  .slice(0, 5)
+                  .map((egilea, key) => (
+                    <Grid.Column key={key}>
+                      <Statistic
+                        size={getStatSize(egilea.count)}
+                        color="violet"
+                      >
+                        <Statistic.Value>{egilea.count}</Statistic.Value>
+                        <Statistic.Label>{egilea.value}</Statistic.Label>
+                      </Statistic>
+                    </Grid.Column>
+                  ))}
+            </Grid>
+          </Container>
+        </Segment>
+        <Segment className="clip-filter-container">
+          <Container>
+            <h3>Iragazkiak:</h3>
+            <Grid columns={3} divided stackable>
+              <Grid.Row>
+                <Grid.Column>
+                  <strong className="filter-heading">Ordenatu:</strong>
+                  <Select
+                    placeholder="Ordenatu klipak"
+                    options={KLIP_ORDENAZIOA}
+                    onChange={(e, { value }) => ordenatu(value)}
+                    defaultValue={'-created_at'}
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <strong className="filter-heading">
+                    Iragazi klip egilea:
+                  </strong>
+                  <Dropdown
+                    id="filter-clip-creator"
+                    placeholder="Klip egilea"
+                    multiple
+                    selection
+                    search
+                    value={filteredClipper}
+                    onAddItem={(event, data) =>
+                      setOptions([
+                        ...options,
+                        {
+                          key: data.value,
+                          text: data.value,
+                          value: data.value,
+                        },
+                      ])
+                    }
+                    options={clipCreators}
+                    onChange={(e, props) =>
+                      filterClips(e, props, 'creator_name', setFilteredClipper)
+                    }
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <strong className="filter-heading">
+                    Iragazi streamerra:
+                  </strong>
+                  <Dropdown
+                    id="filter-streamer"
+                    placeholder="Steamerra"
+                    multiple
+                    selection
+                    search
+                    value={filteredBroadcaster}
+                    onAddItem={(event, data) =>
+                      setOptions([
+                        ...options,
+                        {
+                          key: data.value,
+                          text: data.value,
+                          value: data.value,
+                        },
+                      ])
+                    }
+                    options={clipOwners}
+                    onChange={(e, props) =>
+                      filterClips(
+                        e,
+                        props,
+                        'broadcaster_name',
+                        setfilteredBroadcaster,
+                      )
+                    }
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <Button onClick={clearClipFilters}>Garbitu iragazkiak</Button>
+          </Container>
+        </Segment>
+        <Container>
+          {paginationClips.length > 0 ? (
+            <>
+              <Card.Group itemsPerRow={4} doubling>
+                {paginationClips.map((clip, key) => (
+                  <ClipCard key={key} clip={clip} />
+                ))}
+              </Card.Group>
+              {Math.round(klipak.length / 12) > 1 && (
+                <Segment basic textAlign="center">
+                  <Pagination
+                    boundaryRange={1}
+                    defaultActivePage={1}
+                    showEllipsis={true}
+                    activePage={paginationOrria}
+                    onPageChange={handlePaginationChange}
+                    totalPages={Math.round(klipak.length / 12)}
+                  />
+                </Segment>
+              )}
+            </>
+          ) : (
+            <Segment placeholder>
+              <Header icon>
+                <Icon name="video" />
+                Ez dago bilaketa horrekin ezer.
+              </Header>
+            </Segment>
+          )}
+        </Container>
+      </div>
+    </div>
   );
 };
 
