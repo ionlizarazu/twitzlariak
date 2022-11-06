@@ -2,7 +2,6 @@ import './portada.css';
 
 import {
   Card,
-  Container,
   Dropdown,
   Grid,
   Header,
@@ -12,6 +11,7 @@ import {
   Segment,
   Select,
   Statistic,
+  Sidebar,
   // List,
   // Item,
 } from 'semantic-ui-react';
@@ -42,6 +42,7 @@ const Portada = (props) => {
   const [options, setOptions] = useState([]);
   const [paginationClips, setPaginationClips] = useState([]);
   const [filteredBroadcaster, setfilteredBroadcaster] = useState([]);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
   useEffect(() => {
     if (
       clips_state.loaded &&
@@ -82,18 +83,18 @@ const Portada = (props) => {
     }
   }, [clips_state]);
   const [paginationOrria, setPaginationOrria] = useState(1);
-  // const [clipCreators, setclipCreators] = useState([]);
+  const paginationSize = 10;
   const twitzlariList = twitzlariak.twitzlariak;
   useEffect(() => {
     dispatch(getZuzenekoak(twitzlariList));
   }, [dispatch, twitzlariList]);
-  let gaur = new Date();
-  let atzeraData = new Date();
-  atzeraData.setDate(gaur.getDate() - 30);
 
   useEffect(() => {
     setPaginationClips(
-      klipak.slice((paginationOrria - 1) * 12, (paginationOrria - 1) * 12 + 12),
+      klipak.slice(
+        (paginationOrria - 1) * paginationSize,
+        (paginationOrria - 1) * paginationSize + paginationSize,
+      ),
     );
   }, [klipak, paginationOrria]);
 
@@ -137,15 +138,17 @@ const Portada = (props) => {
 
   return (
     <div>
-      <h1>Twitch euskaraz</h1>
+      {/* <h1>Twitch euskaraz</h1> */}
       <div className="live-container">
-        <h2 className="ui container">Orain zuzenean</h2>
+        <h2>Orain zuzenean</h2>
         {lives.loaded && lives.items.length > 0 ? (
-          <Card.Group itemsPerRow={3} doubling>
-            {lives.items.map((erabiltzailea, index) => (
-              <ZuzenekoaCard erabiltzailea={erabiltzailea} />
-            ))}
-          </Card.Group>
+          <Segment basic className="lives-container">
+            <Card.Group itemsPerRow={3} stackable>
+              {lives.items.map((erabiltzailea, index) => (
+                <ZuzenekoaCard erabiltzailea={erabiltzailea} isLive={true} />
+              ))}
+            </Card.Group>
+          </Segment>
         ) : (
           <Segment basic className="live">
             <Header icon>
@@ -155,35 +158,24 @@ const Portada = (props) => {
           </Segment>
         )}
       </div>
-      <hr />
+
       <div className="clips-container">
-        <h2 className="ui container">Klipak</h2>
-        <Segment className="clipers-container">
-          <Container>
-            <h3>Klipari ekinenak:</h3>
-            <Grid columns={5} className="ranking-grid">
-              {clipCreators &&
-                clipCreators
-                  .sort(dynamicSort('-count'))
-                  .slice(0, 5)
-                  .map((egilea, key) => (
-                    <Grid.Column key={key}>
-                      <Statistic
-                        size={getStatSize(egilea.count)}
-                        color="violet"
-                      >
-                        <Statistic.Value>{egilea.count}</Statistic.Value>
-                        <Statistic.Label>{egilea.value}</Statistic.Label>
-                      </Statistic>
-                    </Grid.Column>
-                  ))}
-            </Grid>
-          </Container>
-        </Segment>
-        <Segment className="clip-filter-container">
-          <Container>
+        <h2>Klipak</h2>
+
+        <Sidebar.Pushable as={Segment} style={{ overflow: 'hidden' }}>
+          <Sidebar
+            as={Segment}
+            animation="overlay"
+            visible={sidebarVisible}
+            className="clip-filter-container"
+          >
+            <Icon
+              className="close-filter"
+              name="close"
+              onClick={() => setSidebarVisible(false)}
+            />
             <h3>Iragazkiak:</h3>
-            <Grid columns={3} divided stackable>
+            <Grid columns={1} stackable>
               <Grid.Row>
                 <Grid.Column>
                   <strong className="filter-heading">Ordenatu:</strong>
@@ -194,10 +186,10 @@ const Portada = (props) => {
                     defaultValue={'-created_at'}
                   />
                 </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
                 <Grid.Column>
-                  <strong className="filter-heading">
-                    Iragazi klip egilea:
-                  </strong>
+                  <strong className="filter-heading">Klip egilea:</strong>
                   <Dropdown
                     id="filter-clip-creator"
                     placeholder="Klip egilea"
@@ -221,10 +213,10 @@ const Portada = (props) => {
                     }
                   />
                 </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
                 <Grid.Column>
-                  <strong className="filter-heading">
-                    Iragazi streamerra:
-                  </strong>
+                  <strong className="filter-heading">Streamerra:</strong>
                   <Dropdown
                     id="filter-streamer"
                     placeholder="Steamerra"
@@ -254,40 +246,77 @@ const Portada = (props) => {
                   />
                 </Grid.Column>
               </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <Button className="secondary" onClick={clearClipFilters}>
+                    Garbitu iragazkiak
+                  </Button>
+                </Grid.Column>
+              </Grid.Row>
             </Grid>
-            <Button onClick={clearClipFilters}>Garbitu iragazkiak</Button>
-          </Container>
-        </Segment>
-        <Container>
-          {paginationClips.length > 0 ? (
-            <>
-              <Card.Group itemsPerRow={4} doubling>
-                {paginationClips.map((clip, key) => (
-                  <ClipCard key={key} clip={clip} />
-                ))}
-              </Card.Group>
-              {Math.round(klipak.length / 12) > 1 && (
-                <Segment basic textAlign="center">
-                  <Pagination
-                    boundaryRange={1}
-                    defaultActivePage={1}
-                    showEllipsis={true}
-                    activePage={paginationOrria}
-                    onPageChange={handlePaginationChange}
-                    totalPages={Math.round(klipak.length / 12)}
-                  />
+          </Sidebar>
+
+          <Sidebar.Pusher /*dimmed={dimmed && visible}*/>
+            <Segment basic className="clips-container">
+              <Button
+                onClick={() => setSidebarVisible(!sidebarVisible)}
+                icon
+                labelPosition="left"
+                className={sidebarVisible ? 'hidden-button primary' : 'primary'}
+              >
+                <Icon name="filter" />
+                Iragazkiak
+              </Button>
+              {paginationClips.length > 0 ? (
+                <>
+                  <Card.Group itemsPerRow={5} stackable>
+                    {paginationClips.map((clip, key) => (
+                      <ClipCard key={key} clip={clip} />
+                    ))}
+                  </Card.Group>
+                  {Math.round(klipak.length / paginationSize) > 1 && (
+                    <Segment basic textAlign="center">
+                      <Pagination
+                        boundaryRange={1}
+                        defaultActivePage={1}
+                        firstItem={null}
+                        lastItem={null}
+                        size="mini"
+                        activePage={paginationOrria}
+                        onPageChange={handlePaginationChange}
+                        totalPages={Math.round(klipak.length / paginationSize)}
+                      />
+                    </Segment>
+                  )}
+                </>
+              ) : (
+                <Segment placeholder>
+                  <Header icon>
+                    <Icon name="video" />
+                    Ez dago bilaketa horrekin ezer.
+                  </Header>
                 </Segment>
               )}
-            </>
-          ) : (
-            <Segment placeholder>
-              <Header icon>
-                <Icon name="video" />
-                Ez dago bilaketa horrekin ezer.
-              </Header>
             </Segment>
-          )}
-        </Container>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+        <Segment className="clipers-container">
+          <h3>Klipen egileak:</h3>
+          <Grid columns={5} stackable className="ranking-grid">
+            {clipCreators &&
+              clipCreators
+                .sort(dynamicSort('-count'))
+                .slice(0, 25)
+                .map((egilea, key) => (
+                  <Grid.Column key={key}>
+                    <Statistic size={getStatSize(egilea.count)} color="violet">
+                      <Statistic.Value>{egilea.count}</Statistic.Value>
+                      <Statistic.Label>{egilea.value}</Statistic.Label>
+                    </Statistic>
+                  </Grid.Column>
+                ))}
+          </Grid>
+        </Segment>
       </div>
     </div>
   );

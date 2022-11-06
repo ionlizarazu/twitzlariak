@@ -1,14 +1,3 @@
-.ui.card .content .header {
-  word-break: break-all;
-}
-
-/* a.ui.button.inverted.link-style {
-  padding: inherit;
-  border: none;
-  margin: inherit;
-  box-shadow: none !important;
-} */
-
 strong.filter-heading {
   display: block;
 }
@@ -18,11 +7,14 @@ i.copy-icon {
   cursor: pointer;
 }
 
-.ui.grid .row.no-padded {
-  padding: 0;
+/* CLIPPER RANKING */
+
+div.ui.grid.ranking-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* CLIPPER RANKING */
 div.ui.grid.ranking-grid div.column {
   display: flex;
   justify-content: center;
@@ -30,7 +22,7 @@ div.ui.grid.ranking-grid div.column {
 
 /* CLIP FILTERS BAND*/
 div.ui.segment.clip-filter-container {
-  width: 100%;
+  /* width: 100%; */
   margin-top: 0;
   background-color: var(--main-color);
   border-radius: 0;
@@ -44,24 +36,56 @@ div.ui.segment.clip-filter-container strong {
   color: white;
 }
 
-div.ui.segment.clip-filter-container button.ui.button {
-  margin-top: 1em;
-  background-color: white;
-  color: var(--main-color);
+div.ui.segment.clip-filter-container i.close-filter {
+  position: absolute;
+  left: 16em;
+  color: white !important;
+  cursor: pointer;
 }
 
 /* CLIPPERS BAND*/
 div.ui.segment.clipers-container {
   width: 100%;
+  padding-right: 5% !important;
+  padding-left: 5% !important;
+  margin-top: 0 !important;
   margin-bottom: 0;
   background-color: var(--main-grey-color);
   border-radius: 0;
+}
+
+/* CLIPS */
+div.ui.clips-container {
+  margin-right: 5% !important;
+  margin-left: 5% !important;
+}
+
+div.ui.clips-container .ui.cards {
+  display: flex;
+  align-items: flex-start;
+}
+
+div.ui.segment.pushable {
+  border: 0;
+  margin-top: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 /* LIVE BAND*/
 div.ui.segment.live {
   display: flex;
   min-height: 10rem !important;
+  justify-content: center;
+}
+
+.live-container div.ui.segment.lives-container {
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+div.ui.segment.lives-container div.ui.cards {
+  display: flex;
   justify-content: center;
 }
 /* div.ui.segment.clipers-container h3 {
