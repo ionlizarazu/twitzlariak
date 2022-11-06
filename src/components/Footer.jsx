@@ -1,28 +1,42 @@
 import React from 'react';
-import { Container, Grid, Header, Segment } from 'semantic-ui-react';
-
+import { Container, List, Grid, Header, Segment } from 'semantic-ui-react';
+import './footer.css';
 export const Footer = () => {
   return (
-    <Segment
-      inverted
-      vertical
-      style={{ margin: '5em 0em 0em', padding: '5em 0em' }}
-    >
-      <Container textAlign="center">
-        <Grid divided inverted stackable>
+    <Segment vertical className="footer">
+      <Container>
+        <Grid divided stackable>
           <Grid.Column width={8}>
-            <Header inverted as="h4" content="Footer Header" />
+            <Header inverted as="h4" content="Informazio orokorra" />
             <p>
-              Extra space for a call to action inside the footer that could help
-              re-engage users.
+              Posible da hemen streamer euskaldun guztiak ez agertzea, eta agian
+              norbait aktibo ez egotea. Dena den, noizbait zuzenekoren bat
+              euskaraz egin duen oro zerrendan gehitzeko saiakera egon da.
+              Norbait falta dela ikusten baduzu mesedez jakinarazi.
             </p>
           </Grid.Column>
           <Grid.Column width={8}>
-            <Header inverted as="h4" content="Footer Header" />
-            <p>
-              Extra space for a call to action inside the footer that could help
-              re-engage users.
-            </p>
+            <Header inverted as="h4" content="Niri buruz:" />
+            <List>
+              <List.Item>
+                <List.Icon name="twitter"></List.Icon>
+                <List.Content>
+                  <a href="https://www.twitter.com/ionliz">@ionliz</a>
+                </List.Content>
+              </List.Item>
+              <List.Item>
+                <List.Icon name="twitch"></List.Icon>
+                <List.Content>
+                  <a href="https://www.twitch.com/ionliz">@ionliz</a>
+                </List.Content>
+              </List.Item>
+              <List.Item>
+                <List.Icon name="github"></List.Icon>
+                <List.Content>
+                  <a href="https://www.github.com/ionlizarazu">@ionlizarazu</a>
+                </List.Content>
+              </List.Item>
+            </List>
           </Grid.Column>
         </Grid>
       </Container>

@@ -1,0 +1,28 @@
+div.footer {
+  padding: 5em 0em !important;
+  margin: 3em 0em 0em !important;
+  background-color: var(--main-purple) !important;
+  color: var(--main-purple-50);
+}
+
+div.footer i {
+  padding: 0.6rem !important;
+  background: white;
+  border-radius: 100%;
+  /* margin: 8px; */
+  color: black;
+  font-size: 1.3rem;
+}
+
+div.footer div.ui.list {
+  margin-left: 1.5rem;
+}
+
+div.footer div.ui.list div.content {
+  font-size: 1.3rem;
+  vertical-align: middle !important;
+}
+
+div.footer div.ui.list div.content a {
+  color: var(--main-purple-50) !important;
+}
