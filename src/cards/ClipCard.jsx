@@ -13,7 +13,7 @@ import moment from 'moment';
 
 const ClipCard = ({ clip }) => {
   return (
-    <Card>
+    <Card className="clip-card">
       <a href={clip.url} target="_blank" rel="noreferrer">
         <Image
           src={clip.thumbnail_url
@@ -21,24 +21,28 @@ const ClipCard = ({ clip }) => {
             .replace('%{height}', 228)}
         />
       </a>
-      <Card.Content>
-        <Card.Header>{clip.title}</Card.Header>
-        <Label attached="top left" className="card-ribbon">
-          {clip.broadcaster_name}
-        </Label>
-      </Card.Content>
-      <Card.Content extra>
+      <Label attached="top left" className="card-ribbon">
+        {clip.broadcaster_name}
+      </Label>
+      <Card.Content className="card-content">
+        <Card.Header>
+          <a href={clip.url} target="_blank" rel="noreferrer">
+            {clip.title}
+          </a>
+        </Card.Header>
         <Segment basic>
-          <Grid columns={2}>
-            <Grid.Row className="no-padded">
-              <Grid.Column width={16}>
-                <Icon name="paperclip" />
-                {clip.creator_name}
-              </Grid.Column>
-            </Grid.Row>
+          <Grid>
             <Grid.Row>
-              <Grid.Column width={10}>
+              <Grid.Column width={11} className="no-l-padded">
                 <Grid>
+                  <Grid.Row className="no-padded">
+                    <Grid.Column>
+                      <Icon name="paperclip" />
+                      {clip.creator_name.length > 15
+                        ? `${clip.creator_name.substring(0, 15)}...`
+                        : clip.creator_name}
+                    </Grid.Column>
+                  </Grid.Row>
                   <Grid.Row className="no-padded">
                     <Grid.Column>
                       <Icon name="clock" />
@@ -53,7 +57,7 @@ const ClipCard = ({ clip }) => {
                   </Grid.Row>
                 </Grid>
               </Grid.Column>
-              <Grid.Column width={6}>
+              <Grid.Column width={5} className="share-clip">
                 <a
                   type="button"
                   role="button"

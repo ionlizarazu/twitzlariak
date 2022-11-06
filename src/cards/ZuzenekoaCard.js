@@ -19,6 +19,7 @@ const ZuzenekoaCard = ({ erabiltzailea }) => {
               .replace('{height}', 228) ||
             'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png'
           }
+          className="live-img"
         />
       </a>
       <Card.Content>
@@ -34,7 +35,9 @@ const ZuzenekoaCard = ({ erabiltzailea }) => {
             {erabiltzailea?.user_name || 'Twitzlaria'}
           </a>
         </Card.Header>
-        <Card.Meta>{erabiltzailea?.game_name || 'Jokoaren izena'}</Card.Meta>
+        {erabiltzailea?.game_name && (
+          <Card.Meta>{erabiltzailea?.game_name}</Card.Meta>
+        )}
         <Card.Description>
           {erabiltzailea?.title ||
             'twitzlariaren deskribapena hemen idatzita agertuko da'}
