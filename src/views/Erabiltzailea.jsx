@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Card, Container, Header, Icon, Image } from 'semantic-ui-react';
+import { Card, Icon, Image } from 'semantic-ui-react';
 
 import moment from 'moment';
 
@@ -16,8 +16,8 @@ const Erabiltzailea = (props) => {
       : {};
   const userObj = userList.length > 0 ? userList[0] : {};
   return (
-    <Container>
-      <Header as="h1">{user}</Header>
+    <div>
+      <h1>{user}</h1>
       <Card>
         <Image
           src={userObj?.profile_image_url
@@ -40,7 +40,7 @@ const Erabiltzailea = (props) => {
           {userObj?.view_count} ikustaldi
         </Card.Content>
       </Card>
-    </Container>
+    </div>
   );
 };
 
