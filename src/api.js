@@ -33,12 +33,13 @@ export const GetErabiltzailearenKlipak = async (id) => {
   const response = await TwitchAPI.get(
     'clips?broadcaster_id=' + id + '&first=100',
   );
-  let gaur = new Date();
-  let atzeraData = new Date();
-  atzeraData.setDate(gaur.getDate() - 30);
-  return response.data.data.filter(
-    (clip) => new Date(clip.created_at) > atzeraData,
-  );
+  // let gaur = new Date();
+  // let atzeraData = new Date();
+  // atzeraData.setDate(gaur.getDate() - 30);
+  // return response.data.data.filter(
+  //   (clip) => new Date(clip.created_at) > atzeraData,
+  // );
+  return response.data.data;
 };
 
 export const GetErabiltzaileak = async (users) => {
