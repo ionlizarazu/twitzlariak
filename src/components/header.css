@@ -1,11 +1,17 @@
 div.header .ui.menu {
+  margin-top: 0;
   background-color: white;
   border-radius: 0;
 }
 
 div.header .ui.menu .ui.container {
   width: 100% !important;
-  justify-content: center;
-  margin-top: 60px;
-  background-color: black;
+  /* margin-top: 60px; */
+  background-color: var(--main-purple-900);
+  font-size: 1.5rem;
+}
+
+div.header .ui.menu .ui.container a.item {
+  color: var(--main-purple-50) !important;
+  font-weight: 900 !important;
 }
