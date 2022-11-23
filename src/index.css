@@ -88,3 +88,21 @@ button.ui.button.secondary:hover {
   background-color: var(--main-color);
   color: white;
 }
+
+.filter-button {
+  color: red;
+}
+
+.pagination-size {
+  /* margin-left: 2rem; */
+  /* margin-top: 2em; */
+  /* font-size: 0.9rem; */
+}
+
+.visible.menu.transition {
+  z-index: 999 !important;
+}
+
+p.description {
+  font-size: 1.5em;
+}

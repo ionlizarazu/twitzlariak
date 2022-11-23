@@ -29,17 +29,21 @@ export const GetErabiltzailearenBideoak = async (id) => {
 //     setBideoak(azkenBideo)
 // })
 
-export const GetErabiltzailearenKlipak = async (id) => {
-  const response = await TwitchAPI.get(
-    'clips?broadcaster_id=' + id + '&first=100',
+export const GetErabiltzaileenKlipak = async (users) => {
+  const result = [];
+  await Promise.all(
+    users.map(async (user) => {
+      const response = await TwitchAPI.get(
+        `clips?broadcaster_id=${user.id}&first=100`,
+      );
+      result.push({
+        user_id: user.id,
+        username: user.display_name,
+        clips: response?.data?.data,
+      });
+    }),
   );
-  // let gaur = new Date();
-  // let atzeraData = new Date();
-  // atzeraData.setDate(gaur.getDate() - 30);
-  // return response.data.data.filter(
-  //   (clip) => new Date(clip.created_at) > atzeraData,
-  // );
-  return response.data.data;
+  return result;
 };
 
 export const GetErabiltzaileak = async (users) => {

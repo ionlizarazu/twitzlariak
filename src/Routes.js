@@ -15,8 +15,17 @@ function AppRoutes() {
       <Route path="/" element={<App />}>
         <Route exact path="/" element={<Portada />}></Route>
         <Route exact path="/bilatzailea" element={<Bilatzailea />}></Route>
-        <Route exact path="/gutarrak" element={<Gutarrak />}></Route>
-        <Route path="/gutarrak/:user" element={<Erabiltzailea />}></Route>
+        <Route
+          basename="/twitzlariak"
+          exact
+          path="/gutarrak"
+          element={<Gutarrak />}
+        ></Route>
+        <Route
+          basename="/twitzlariak"
+          path="/gutarrak/:user"
+          element={<Erabiltzailea />}
+        ></Route>
       </Route>
     </Routes>
   );

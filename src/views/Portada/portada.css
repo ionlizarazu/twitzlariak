@@ -1,5 +1,7 @@
 strong.filter-heading {
   display: block;
+  padding-bottom: 0.3em;
+  font-size: 1.3em;
 }
 
 i.copy-icon {
@@ -43,6 +45,14 @@ div.ui.segment.clip-filter-container i.close-filter {
   cursor: pointer;
 }
 
+div.order-select {
+  margin-left: 0.5em;
+}
+
+div.ui.grid.order-container {
+  margin-bottom: 1em;
+}
+
 /* CLIPPERS BAND*/
 div.ui.segment.clipers-container {
   width: 100%;
@@ -52,24 +62,6 @@ div.ui.segment.clipers-container {
   margin-bottom: 0;
   background-color: var(--main-grey-color);
   border-radius: 0;
-}
-
-/* CLIPS */
-div.ui.clips-container {
-  margin-right: 5% !important;
-  margin-left: 5% !important;
-}
-
-div.ui.clips-container .ui.cards {
-  display: flex;
-  align-items: flex-start;
-}
-
-div.ui.segment.pushable {
-  border: 0;
-  margin-top: 0;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 /* LIVE BAND*/

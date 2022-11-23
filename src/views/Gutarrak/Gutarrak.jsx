@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import {
   Card,
@@ -11,14 +11,23 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
-import GutarraCard from '../cards/GutarraCard';
-import { dynamicSort } from '../utils.js';
+import GutarraCard from '../../components/cards/GutarraCard';
+import { dynamicSort } from '../../utils.js';
+import { getErabiltzailearenBideoak } from '../../store/actions';
 
 // import moment from 'moment';
 
 const Gutarrak = (props) => {
+  const dispatch = useDispatch();
   const erabiltzaileak = useSelector((state) => state.erabiltzaileak);
-
+  const users = useSelector((state) => state.erabiltzaileak);
+  const users_ref = useRef(users);
+  useEffect(() => {
+    if (users.items.length > 0) {
+      users.items.map((user) => dispatch(getErabiltzailearenBideoak(user)));
+    }
+    users_ref.current = users;
+  }, [dispatch]);
   return (
     <div>
       <h1>Gutarrak</h1>
@@ -29,7 +38,7 @@ const Gutarrak = (props) => {
           </Dimmer>
           {erabiltzaileak.loaded &&
             erabiltzaileak.items
-              .sort(dynamicSort('display_name'))
+              .sort(dynamicSort('-view_count'))
               .map((user) => {
                 return <GutarraCard user={user} />;
               })}

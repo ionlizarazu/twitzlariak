@@ -8,11 +8,27 @@ const GutarraCard = ({ user }) => {
   return (
     <Card>
       <Link to={`/gutarrak/${user?.display_name}`}>
-        <Image
-          src={user?.profile_image_url
-            ?.replace('%{width}', 440)
-            .replace('%{height}', 228)}
-        />
+        {user.broadcaster_type ? (
+          <Image
+            label={{
+              color: 'violet',
+              content:
+                user.broadcaster_type === 'affiliate'
+                  ? 'Afiliatua'
+                  : user.broadcaster_type,
+              ribbon: 'right',
+            }}
+            src={user?.profile_image_url
+              ?.replace('%{width}', 440)
+              .replace('%{height}', 228)}
+          />
+        ) : (
+          <Image
+            src={user?.profile_image_url
+              ?.replace('%{width}', 440)
+              .replace('%{height}', 228)}
+          />
+        )}
       </Link>
       <Card.Content>
         <Card.Header>

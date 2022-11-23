@@ -5,9 +5,6 @@ import './header.css';
 import { useLocation } from 'react-router-dom';
 export const Header = () => {
   const location = useLocation();
-  React.useEffect(() => {
-    console.log(location);
-  }, [location.pathname]);
   return (
     <div className="header">
       {location.pathname === '/' && <h1>Twitch euskaraz</h1>}

@@ -1,6 +1,6 @@
 import Bilatzailea from './Bilatzailea';
-import Erabiltzailea from './Erabiltzailea';
-import Gutarrak from './Gutarrak';
-import Portada from './Portada';
+import Erabiltzailea from './Gutarrak/Erabiltzailea';
+import Gutarrak from './Gutarrak/Gutarrak';
+import Portada from './Portada/Portada';
 
 export { Bilatzailea, Erabiltzailea, Portada, Gutarrak };
