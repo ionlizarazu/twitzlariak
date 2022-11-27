@@ -21,6 +21,7 @@ const GutarraCard = ({ user }) => {
             src={user?.profile_image_url
               ?.replace('%{width}', 440)
               .replace('%{height}', 228)}
+            className="gutarra-card-img"
           />
         ) : (
           <Image

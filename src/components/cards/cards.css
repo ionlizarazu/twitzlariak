@@ -4,6 +4,11 @@
   justify-content: center;
   background-color: #6441a5;
   color: white;
+  font-size: 1rem;
+}
+
+.gutarra-card-img .ui.ribbon {
+  font-size: 1.2rem;
 }
 
 img.live-img {

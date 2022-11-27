@@ -38,7 +38,8 @@ const Gutarrak = (props) => {
           </Dimmer>
           {erabiltzaileak.loaded &&
             erabiltzaileak.items
-              .sort(dynamicSort('-view_count'))
+              .sort(dynamicSort('-viewer_count'))
+              .sort(dynamicSort('-broadcaster_type'))
               .map((user) => {
                 return <GutarraCard user={user} />;
               })}
