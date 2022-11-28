@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/twitzlariak/static/css/main.6341f1a4.chunk.css",
-    "main.js": "/twitzlariak/static/js/main.72b3882b.chunk.js",
-    "main.js.map": "/twitzlariak/static/js/main.72b3882b.chunk.js.map",
+    "main.css": "/twitzlariak/static/css/main.47475232.chunk.css",
+    "main.js": "/twitzlariak/static/js/main.01eaa357.chunk.js",
+    "main.js.map": "/twitzlariak/static/js/main.01eaa357.chunk.js.map",
     "runtime-main.js": "/twitzlariak/static/js/runtime-main.23d5a441.js",
     "runtime-main.js.map": "/twitzlariak/static/js/runtime-main.23d5a441.js.map",
     "static/css/2.9f1b9ec1.chunk.css": "/twitzlariak/static/css/2.9f1b9ec1.chunk.css",
@@ -12,16 +12,16 @@
     "static/js/3.2f76b6f0.chunk.js.map": "/twitzlariak/static/js/3.2f76b6f0.chunk.js.map",
     "index.html": "/twitzlariak/index.html",
     "static/css/2.9f1b9ec1.chunk.css.map": "/twitzlariak/static/css/2.9f1b9ec1.chunk.css.map",
-    "static/css/main.6341f1a4.chunk.css.map": "/twitzlariak/static/css/main.6341f1a4.chunk.css.map",
+    "static/css/main.47475232.chunk.css.map": "/twitzlariak/static/css/main.47475232.chunk.css.map",
     "static/js/2.6a33d2c3.chunk.js.LICENSE.txt": "/twitzlariak/static/js/2.6a33d2c3.chunk.js.LICENSE.txt",
-    "static/media/ShareTech-Regular.c0baac7e.ttf": "/twitzlariak/static/media/ShareTech-Regular.c0baac7e.ttf",
+    "static/media/index.css": "/twitzlariak/static/media/ShareTech-Regular.c0baac7e.ttf",
     "static/media/semantic.min.css": "/twitzlariak/static/media/outline-icons.ddae9b1b.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.23d5a441.js",
     "static/css/2.9f1b9ec1.chunk.css",
     "static/js/2.6a33d2c3.chunk.js",
-    "static/css/main.6341f1a4.chunk.css",
-    "static/js/main.72b3882b.chunk.js"
+    "static/css/main.47475232.chunk.css",
+    "static/js/main.01eaa357.chunk.js"
   ]
 }
