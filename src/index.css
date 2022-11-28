@@ -27,6 +27,11 @@ code {
   --font-family: 'Share Tech';
 }
 
+@font-face {
+  font-family: 'Share Tech';
+  src: local('Share Tech'), url('./fonts/ShareTech-Regular.ttf');
+}
+
 h1 {
   display: flex;
   justify-content: center;
