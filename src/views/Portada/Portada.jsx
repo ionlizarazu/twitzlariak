@@ -87,7 +87,10 @@ const Portada = (props) => {
   }, [dispatch, twitzlariList]);
 
   useEffect(() => {
-    if (users_ref.current.loading && users.loaded && users.items.length > 0) {
+    if (
+      (users_ref.current.loading && users.loaded && users.items.length > 0) ||
+      (!clips_state.loaded && !clips_state.loading)
+    ) {
       dispatch(getErabiltzaileenKlipak(users.items));
     }
     users_ref.current = users;
