@@ -45,7 +45,7 @@
     "stylelint:fix": "yarn stylelint --fix && yarn stylelint:overrides --fix && yarn stylelint:theme --fix",
     "prettier": "./node_modules/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}'",
     "prettier:fix": "./node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx,json,css,less,md}'",
-    "lint": "./node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx}'",
+    "lint": "./node_modules/eslint/bin/eslint.js --max-errors=0 'src/**/*.{js,jsx}'",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'"
   },
   "eslintConfig": {
