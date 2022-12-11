@@ -1,11 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Container, Menu } from 'semantic-ui-react';
+
+import { HIDE_HEADER_FOOTER } from '../../config/const';
 import './header.css';
-import { useLocation } from 'react-router-dom';
+
 export const Header = () => {
   const location = useLocation();
-  return (
+  let [searchParams, setSearchParams] = useSearchParams();
+  return HIDE_HEADER_FOOTER.includes(location.pathname) &&
+    !searchParams.get('probatzen') ? (
+    <></>
+  ) : (
     <div className="header">
       {location.pathname === '/' && <h1>Twitch euskaraz</h1>}
       <Menu inverted>

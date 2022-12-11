@@ -68,3 +68,5 @@ export const TWITZLARI_AUKERAK = [
     };
   }),
 ];
+
+export const HIDE_HEADER_FOOTER = ['/tresnak/zuzenean'];

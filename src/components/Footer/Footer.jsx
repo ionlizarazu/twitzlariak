@@ -1,8 +1,17 @@
 import React from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Container, List, Grid, Header, Segment } from 'semantic-ui-react';
+
+import { HIDE_HEADER_FOOTER } from '../../config/const';
 import './footer.css';
+
 export const Footer = () => {
-  return (
+  const location = useLocation();
+  let [searchParams, setSearchParams] = useSearchParams();
+  return HIDE_HEADER_FOOTER.includes(location.pathname) &&
+    !searchParams.get('probatzen') ? (
+    <></>
+  ) : (
     <Segment vertical className="footer">
       <Container>
         <Grid divided stackable>
