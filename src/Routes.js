@@ -23,12 +23,14 @@ function AppRoutes() {
         <Route exact path="/" element={<Portada />}></Route>
         <Route exact path="/bilatzailea" element={<Bilatzailea />}></Route>
         <Route
+          basename="/"
           exact
           path="/tresnak"
           showHeader={false}
           element={<Tresnak />}
         ></Route>
         <Route
+          basename="/"
           exact
           path="/tresnak/zuzenean"
           showHeader={false}

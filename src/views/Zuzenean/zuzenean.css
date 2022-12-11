@@ -1,0 +1,25 @@
+div.ui.basic.segment.tools-container {
+  padding: 2em;
+}
+
+div.ui.basic.segment.tools-container span {
+  font-size: 1.5em;
+}
+
+@keyframes opAnimation {
+  0% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.lives-list i.icon.circle {
+  animation: opAnimation 2s infinite !important;
+}
