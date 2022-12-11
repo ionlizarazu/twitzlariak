@@ -1,4 +1,4 @@
-function dynamicSort(property) {
+export const dynamicSort = (property) => {
   var sortOrder = 1;
   if (property[0] === '-') {
     sortOrder = -1;
@@ -12,9 +12,7 @@ function dynamicSort(property) {
       a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
     return result * sortOrder;
   };
-}
-
-export { dynamicSort };
+};
 
 export const getStatSize = (number) => {
   if (number < 20) {
@@ -29,3 +27,22 @@ export const getStatSize = (number) => {
     return 'huge';
   }
 };
+
+export const hexToRgb = (hex) => {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? `${parseInt(result[1], 16)}-${parseInt(result[2], 16)}-${parseInt(
+        result[3],
+        16,
+      )}`
+    : null;
+};
+
+export const rgbToHex = (r, g, b) =>
+  '#' +
+  [r, g, b]
+    .map((x) => {
+      const hex = x.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    })
+    .join('');

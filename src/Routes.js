@@ -3,7 +3,14 @@ import { Routes, Route } from 'react-router-dom';
 
 import App from './App';
 import './App.css';
-import { Bilatzailea, Erabiltzailea, Gutarrak, Portada } from './views';
+import {
+  Bilatzailea,
+  Erabiltzailea,
+  Gutarrak,
+  Portada,
+  Zuzenean,
+  Tresnak,
+} from './views';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -16,13 +23,25 @@ function AppRoutes() {
         <Route exact path="/" element={<Portada />}></Route>
         <Route exact path="/bilatzailea" element={<Bilatzailea />}></Route>
         <Route
-          basename="/twitzlariak"
+          exact
+          path="/tresnak"
+          showHeader={false}
+          element={<Tresnak />}
+        ></Route>
+        <Route
+          exact
+          path="/tresnak/zuzenean"
+          showHeader={false}
+          element={<Zuzenean />}
+        ></Route>
+        <Route
+          basename="/"
           exact
           path="/gutarrak"
           element={<Gutarrak />}
         ></Route>
         <Route
-          basename="/twitzlariak"
+          basename="/"
           path="/gutarrak/:user"
           element={<Erabiltzailea />}
         ></Route>
