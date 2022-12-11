@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/twitzlariak/static/css/main.47475232.chunk.css",
-    "main.js": "/twitzlariak/static/js/main.f692686f.chunk.js",
-    "main.js.map": "/twitzlariak/static/js/main.f692686f.chunk.js.map",
-    "runtime-main.js": "/twitzlariak/static/js/runtime-main.23d5a441.js",
-    "runtime-main.js.map": "/twitzlariak/static/js/runtime-main.23d5a441.js.map",
+    "main.css": "/twitzlariak/static/css/main.ea9b49c3.chunk.css",
+    "main.js": "/twitzlariak/static/js/main.4ae6eb33.chunk.js",
+    "main.js.map": "/twitzlariak/static/js/main.4ae6eb33.chunk.js.map",
+    "runtime-main.js": "/twitzlariak/static/js/runtime-main.af49e37a.js",
+    "runtime-main.js.map": "/twitzlariak/static/js/runtime-main.af49e37a.js.map",
     "static/css/2.9f1b9ec1.chunk.css": "/twitzlariak/static/css/2.9f1b9ec1.chunk.css",
-    "static/js/2.eaff1010.chunk.js": "/twitzlariak/static/js/2.eaff1010.chunk.js",
-    "static/js/2.eaff1010.chunk.js.map": "/twitzlariak/static/js/2.eaff1010.chunk.js.map",
-    "static/js/3.2f76b6f0.chunk.js": "/twitzlariak/static/js/3.2f76b6f0.chunk.js",
-    "static/js/3.2f76b6f0.chunk.js.map": "/twitzlariak/static/js/3.2f76b6f0.chunk.js.map",
+    "static/js/2.8f70c974.chunk.js": "/twitzlariak/static/js/2.8f70c974.chunk.js",
+    "static/js/2.8f70c974.chunk.js.map": "/twitzlariak/static/js/2.8f70c974.chunk.js.map",
+    "static/js/3.38a57bc4.chunk.js": "/twitzlariak/static/js/3.38a57bc4.chunk.js",
+    "static/js/3.38a57bc4.chunk.js.map": "/twitzlariak/static/js/3.38a57bc4.chunk.js.map",
     "index.html": "/twitzlariak/index.html",
     "static/css/2.9f1b9ec1.chunk.css.map": "/twitzlariak/static/css/2.9f1b9ec1.chunk.css.map",
-    "static/css/main.47475232.chunk.css.map": "/twitzlariak/static/css/main.47475232.chunk.css.map",
-    "static/js/2.eaff1010.chunk.js.LICENSE.txt": "/twitzlariak/static/js/2.eaff1010.chunk.js.LICENSE.txt",
+    "static/css/main.ea9b49c3.chunk.css.map": "/twitzlariak/static/css/main.ea9b49c3.chunk.css.map",
+    "static/js/2.8f70c974.chunk.js.LICENSE.txt": "/twitzlariak/static/js/2.8f70c974.chunk.js.LICENSE.txt",
     "static/media/index.css": "/twitzlariak/static/media/ShareTech-Regular.c0baac7e.ttf",
     "static/media/semantic.min.css": "/twitzlariak/static/media/outline-icons.ddae9b1b.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.23d5a441.js",
+    "static/js/runtime-main.af49e37a.js",
     "static/css/2.9f1b9ec1.chunk.css",
-    "static/js/2.eaff1010.chunk.js",
-    "static/css/main.47475232.chunk.css",
-    "static/js/main.f692686f.chunk.js"
+    "static/js/2.8f70c974.chunk.js",
+    "static/css/main.ea9b49c3.chunk.css",
+    "static/js/main.4ae6eb33.chunk.js"
   ]
 }
