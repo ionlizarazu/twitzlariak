@@ -8,6 +8,7 @@ import './header.css';
 
 export const Header = () => {
   const location = useLocation();
+  // eslint-disable-next-line no-unused-vars
   let [searchParams, setSearchParams] = useSearchParams();
   return HIDE_HEADER_FOOTER.includes(location.pathname) &&
     !searchParams.get('probatzen') ? (

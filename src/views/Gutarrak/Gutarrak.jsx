@@ -27,6 +27,7 @@ const Gutarrak = (props) => {
       users.items.map((user) => dispatch(getErabiltzailearenBideoak(user)));
     }
     users_ref.current = users;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
   return (
     <div>

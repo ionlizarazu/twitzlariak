@@ -12,8 +12,6 @@ import {
   Select,
   Statistic,
   Sidebar,
-  // List,
-  // Item,
 } from 'semantic-ui-react';
 
 import ClipCard from '../../components/cards/ClipCard';
@@ -36,7 +34,6 @@ const Portada = (props) => {
   const [clipCreators, setclipCreators] = useState([]);
   const [options, setOptions] = useState([]);
   const [sidebarVisible, setSidebarVisible] = useState(false);
-
   const { functions, data } = useFilteredPagination([]);
   const { pagination, currentPage, paginationSize, dataList, filters } = data;
   useEffect(() => {
@@ -69,7 +66,12 @@ const Portada = (props) => {
       );
       setclipCreators(
         [...new Set(klipak.map((k) => k.creator_name).sort())].map((c_name) => {
-          var clip_count = klipak.filter((k) => k.creator_name === c_name);
+          var clip_count = klipak.filter(
+            (k) =>
+              k.creator_name === c_name &&
+              (new Date() - new Date(k.created_at)) / (1000 * 60 * 60 * 24) <
+                90,
+          );
           return {
             key: c_name,
             value: c_name,
@@ -94,6 +96,7 @@ const Portada = (props) => {
       dispatch(getErabiltzaileenKlipak(users.items));
     }
     users_ref.current = users;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, users]);
 
   const handlePaginationChange = (e, { activePage }) => {
@@ -134,7 +137,7 @@ const Portada = (props) => {
           <Sidebar.Pushable as={Segment} style={{ overflow: 'hidden' }}>
             <Sidebar
               as={Segment}
-              animation="push"
+              animation="overlay"
               visible={sidebarVisible}
               className="clip-filter-container"
             >
@@ -305,7 +308,7 @@ const Portada = (props) => {
         </div>
 
         <Segment className="clipers-container">
-          <h3>Klipen egileak:</h3>
+          <h3>Azken 90 egunetako klipen egileak:</h3>
           <Grid columns={5} stackable className="ranking-grid">
             {clipCreators &&
               clipCreators

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { Segment, List, Grid, Input } from 'semantic-ui-react';
@@ -17,6 +17,7 @@ const Zuzenean = (props) => {
   const twitzlariList = twitzlariak.twitzlariak;
   const dispatch = useDispatch();
   const lives = useSelector((state) => state.zuzenekoak);
+  // eslint-disable-next-line no-unused-vars
   let [searchParams, setSearchParams] = useSearchParams();
   const [containerBgCHandler, containerBgC] = ParamManager(
     'containerBgC',
@@ -38,7 +39,7 @@ const Zuzenean = (props) => {
     dispatch(getZuzenekoak(twitzlariList));
     const interval = setInterval(
       () => dispatch(getZuzenekoak(twitzlariList)),
-      5000,
+      30000,
     );
     return () => clearInterval(interval);
   }, [dispatch, twitzlariList]);

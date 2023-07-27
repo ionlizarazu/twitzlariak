@@ -34,6 +34,7 @@ const Erabiltzailea = (props) => {
         dispatch(getErabiltzailearenBideoak(user_obj));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, user_obj]);
   const user_archive = videos?.broadcasters?.[user_obj.display_name]
     ? videos?.broadcasters?.[user_obj.display_name].filter(
